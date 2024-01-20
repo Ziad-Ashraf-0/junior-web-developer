@@ -13,7 +13,7 @@ function Home() {
         //remote url "http://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/?url=endpoint"
         //local url "http://localhost/scandiweb-endpoint/?url=endpoint"
         const response = await axios.get(
-          "http://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/?url=endpoint"
+          "https://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/?url=endpoint"
         );
         setProducts(response.data);
         console.log(response.data);
@@ -42,7 +42,7 @@ function Home() {
   const handleMassDelete = async () => {
     try {
       const response = await axios.get(
-        "http://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/",
+        "https://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/",
         {
           params: {
             url: "endpoint",

@@ -10,10 +10,10 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //remote url "http://ziad42.000webhostapp.com/"
-        //local url "http://localhost/demo/"
+        //remote url "http://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/?url=endpoint"
+        //local url "http://localhost/scandiweb-endpoint/?url=endpoint"
         const response = await axios.get(
-          "https://ziad42.000webhostapp.com/scandiweb/endpoint/"
+          "http://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/?url=endpoint"
         );
         setProducts(response.data);
         console.log(response.data);
@@ -33,8 +33,41 @@ function Home() {
         return [...prevSelectedProducts, productId];
       }
     });
+  };
 
+  useEffect(() => {
     console.log(selectedProducts);
+  }, [selectedProducts]);
+
+  const handleMassDelete = async () => {
+    try {
+      const response = await axios.get(
+        "http://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/",
+        {
+          params: {
+            url: "endpoint",
+            ids: selectedProducts.join(","),
+          },
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+
+      console.log(response);
+
+      if (response.status === 200) {
+        // Filter products based on selected product IDs
+        const filteredProducts = products.filter(
+          (product) => !selectedProducts.includes(product.sku)
+        );
+        // Update the state with filtered products
+        setProducts(filteredProducts);
+        setSelectedProducts([]);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -47,7 +80,9 @@ function Home() {
           <Link to="/add" className="btn">
             ADD
           </Link>
-          <Link className="btn">mass delete</Link>
+          <Link className="btn" onClick={handleMassDelete}>
+            mass delete
+          </Link>
         </div>
       </div>
 
@@ -56,8 +91,8 @@ function Home() {
           <div key={index} className="item">
             <input
               type="checkbox"
-              checked={selectedProducts.includes(product.id)}
-              onChange={() => handleCheckboxChange(product.id)}
+              checked={selectedProducts.includes(product.sku)}
+              onChange={() => handleCheckboxChange(product.sku)}
               className="delete-checkbox"
             />
             <div>{product.sku}</div>
@@ -66,9 +101,7 @@ function Home() {
             {product.type === "DVD" && <div>Size: {product.size}</div>}
             {product.type === "Book" && <div>Weight: {product.weight}</div>}
             {product.type === "Furniture" && (
-              <div>
-                Dimensions: {product.height}x{product.length}x{product.width}
-              </div>
+              <div>Dimensions: {product.dimension}</div>
             )}
           </div>
         ))}

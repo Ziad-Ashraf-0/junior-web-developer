@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import "./home.css";
@@ -7,6 +7,7 @@ import "./home.css";
 const AddProduct = () => {
   const [type, setType] = useState("DVD"); // Default type is "dvd"
   const hiddenSubmitButtonRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleTypeChange = (event) => {
     setType(event.target.value);
@@ -50,7 +51,7 @@ const AddProduct = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = {
@@ -76,19 +77,29 @@ const AddProduct = () => {
         break;
     }
 
-    console.log(formData);
-
-    //remote url "http://ziad42.000webhostapp.com/"
+    //remote url "http://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/?url=endpoint"
     //local url "http://localhost/demo/"
 
-    axios
-      .post("https://ziad42.000webhostapp.com/scandiweb/endpoint/", formData)
-      .then((response) => {
-        console.log("Product added successfully:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error adding product:", error);
-      });
+    try {
+      const response = await axios.post(
+        "http://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/?url=endpoint",
+        formData,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+
+      if (response.data) {
+        alert(response.data);
+      } else {
+        console.log("hh");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
   };
 
   const handleSaveClick = () => {

@@ -82,7 +82,7 @@ const AddProduct = () => {
 
     try {
       const response = await axios.post(
-        "http://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/?url=endpoint",
+        "https://ziad42.000webhostapp.com/scandiweb/endpoint/index.php/?url=endpoint",
         formData,
         {
           headers: {

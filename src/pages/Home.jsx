@@ -98,8 +98,8 @@ function Home() {
             <div>{product.sku}</div>
             <div>{product.name}</div>
             <div>{product.price} $</div>
-            {product.type === "DVD" && <div>Size: {product.size}</div>}
-            {product.type === "Book" && <div>Weight: {product.weight}</div>}
+            {product.type === "DVD" && <div>Size: {product.size} MB</div>}
+            {product.type === "Book" && <div>Weight: {product.weight} KG</div>}
             {product.type === "Furniture" && (
               <div>Dimensions: {product.dimension}</div>
             )}

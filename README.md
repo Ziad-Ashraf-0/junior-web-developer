@@ -14,4 +14,4 @@ This repository contains a junior web development project created by a developer
 
 ## Live At
 
-[Click me](https://ziad42.000webhostapp.com/)
+[Click me](https://starlit-frangipane-fef9fb.netlify.app/)
